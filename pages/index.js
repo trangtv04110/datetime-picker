@@ -8,6 +8,10 @@ export default function Home() {
         <title>Demo App</title>
         <meta name="description" content="Demo app" />
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
       </Head>
 
       <main>
