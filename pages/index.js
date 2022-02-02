@@ -1,5 +1,6 @@
 import Head from "next/head";
 import DatePicker from "../components/date-picker";
+import TimePicker from "../components/time-picker";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
 
       <main>
         <DatePicker />
+        <TimePicker />
       </main>
     </div>
   );

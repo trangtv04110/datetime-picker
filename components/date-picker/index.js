@@ -51,7 +51,7 @@ export default function DatePicker() {
   return (
     <div>
       <div className="input-group">
-        <label>Date mobile</label>
+        <label>Date picker</label>
         <input
           defaultValue={confirmDate.format("MM/DD/YYYY")}
           onClick={() => {
