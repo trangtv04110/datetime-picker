@@ -52,11 +52,8 @@ function TimePicker({ selected, onChange }) {
       {showPicker && (
         <div className="modal">
           <div className="modal-content" ref={wrapperRef}>
-            <div
-              className="modal-header flex-center"
-              style={{ position: "relative" }}
-            >
-              <h1 style={{ fontWeight: 500, letterSpacing: "0.15rem" }}>
+            <div className="modal-header flex-center">
+              <h1>
                 {addPadding(selectedHour)}:{addPadding(selectedMinute)}
               </h1>
               <button
@@ -66,10 +63,8 @@ function TimePicker({ selected, onChange }) {
                 }}
               >
                 <span
-                  className="material-icons"
+                  className="material-icons btn-transform"
                   style={{
-                    transition:
-                      "transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
                     transform: showMinutePicker
                       ? "rotate(180deg)"
                       : "rotate(0deg)",

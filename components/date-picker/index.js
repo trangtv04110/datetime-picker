@@ -54,16 +54,14 @@ function DatePicker({ selected, onChange }) {
           <div className="modal-content" ref={wrapperRef}>
             <div className="modal-header">
               <div
-                style={{ paddingLeft: 10, cursor: "pointer" }}
+                className="month-name"
                 onClick={() => setShowYearPicker(!showYearPicker)}
               >
                 {moment(selectedDate).format("MMMM YYYY")}
-                <button style={{ marginLeft: 10 }}>
+                <button>
                   <span
                     className="material-icons"
                     style={{
-                      transition:
-                        "transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
                       transform: showYearPicker
                         ? "rotate(180deg)"
                         : "rotate(0deg)",
