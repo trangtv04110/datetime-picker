@@ -54,7 +54,7 @@ export default function HourPicker({ selectedHour, setSelectedHour }) {
       <div
         className="line"
         style={{
-          height: selectedHour < 12 ? 130 : 80,
+          height: selectedHour < 12 ? 115 : 65,
           transform: `rotateZ(${30 * selectedHour}deg)`,
         }}
       ></div>
