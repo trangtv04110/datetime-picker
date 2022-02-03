@@ -1,4 +1,7 @@
-export default function MinutePicker({ selectedMinute, setSelectedMinute }) {
+import PropTypes from "prop-types";
+import moment from "moment";
+
+function MinutePicker({ selectedMinute, onChange }) {
   const getSelectedClass = (i) => {
     if (Number(selectedMinute) === i) return "circle flex-center selected";
     return "circle flex-center";
@@ -9,7 +12,7 @@ export default function MinutePicker({ selectedMinute, setSelectedMinute }) {
     for (let i = 0; i < 60; i++) {
       arr.push(
         <div
-          onClick={() => setSelectedMinute(i)}
+          onClick={() => onChange(i)}
           key={i}
           className={getSelectedClass(i)}
           style={{
@@ -40,3 +43,15 @@ export default function MinutePicker({ selectedMinute, setSelectedMinute }) {
     </div>
   );
 }
+
+MinutePicker.propTypes = {
+  selectedHour: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+MinutePicker.defaultProps = {
+  selectedHour: moment().format("mm"),
+  onChange: () => {},
+};
+
+export default MinutePicker;

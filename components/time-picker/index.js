@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import MinutePicker from "./minute";
@@ -9,32 +10,29 @@ const addPadding = (number) => {
   return num;
 };
 
-function useOutsideAlerter(ref, setShowPicker) {
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setShowPicker(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-}
-
-export default function TimePicker() {
+function TimePicker({ selected, onChange }) {
   const [showPicker, setShowPicker] = useState(false);
 
   const [showMinutePicker, setShowMinutePicker] = useState(false);
 
-  const [confirmTime, setConfirmTime] = useState(moment().format("HH:mm"));
+  const [confirmTime, setConfirmTime] = useState(selected);
 
-  const [selectedHour, setSelectedHour] = useState(moment().format("HH"));
-  const [selectedMinute, setSelectedMinute] = useState(moment().format("mm"));
+  const [selectedHour, setSelectedHour] = useState(selected.split(":")[0]);
+  const [selectedMinute, setSelectedMinute] = useState(selected.split(":")[1]);
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setShowPicker);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowPicker(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [wrapperRef]);
 
   return (
     <div>
@@ -84,23 +82,17 @@ export default function TimePicker() {
             </div>
 
             {showMinutePicker ? (
-              <div
-                className="modal-body flex-center"
-                style={{ minHeight: 284 }}
-              >
+              <div className="modal-body flex-center">
                 <MinutePicker
                   selectedMinute={selectedMinute}
-                  setSelectedMinute={setSelectedMinute}
+                  onChange={setSelectedMinute}
                 />
               </div>
             ) : (
-              <div
-                className="modal-body flex-center"
-                style={{ minHeight: 284 }}
-              >
+              <div className="modal-body flex-center">
                 <HourPicker
                   selectedHour={selectedHour}
-                  setSelectedHour={(h) => {
+                  onChange={(h) => {
                     setSelectedHour(h);
                     setShowMinutePicker(true);
                   }}
@@ -112,10 +104,12 @@ export default function TimePicker() {
               <button onClick={() => setShowPicker(false)}>Cancel</button>
               <button
                 onClick={() => {
-                  setConfirmTime(
-                    `${addPadding(selectedHour)}:${addPadding(selectedMinute)}`
-                  );
+                  const value = `${addPadding(selectedHour)}:${addPadding(
+                    selectedMinute
+                  )}`;
+                  setConfirmTime(value);
                   setShowPicker(false);
+                  onChange(value);
                 }}
                 style={{ marginLeft: 8 }}
               >
@@ -128,3 +122,15 @@ export default function TimePicker() {
     </div>
   );
 }
+
+TimePicker.propTypes = {
+  selected: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+TimePicker.defaultProps = {
+  selected: moment().format("HH:mm"),
+  onChange: () => {},
+};
+
+export default TimePicker;

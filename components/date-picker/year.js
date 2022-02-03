@@ -1,13 +1,13 @@
+import PropTypes from "prop-types";
 import { useEffect } from "react";
+import moment from "moment";
 
 const start = 1900;
 const to = 2100;
 
-export default function Year({
-  selectedYear,
-  handleSelectedYear,
-  showYearPicker,
-}) {
+function Year({ selectedDate, onChange, showYearPicker }) {
+  const selectedYear = Number(moment(selectedDate).format("YYYY"));
+
   const renderRows = () => {
     let rows = [];
     let arr = [];
@@ -18,7 +18,10 @@ export default function Year({
           <button
             className={selectedYear === i ? "selected" : ""}
             id={`year-${i}`}
-            onClick={() => handleSelectedYear(i)}
+            onClick={() => {
+              const newDate = moment(selectedDate).set("year", i);
+              onChange(newDate.format("YYYY-MM-DD"));
+            }}
           >
             {i}
           </button>
@@ -46,3 +49,17 @@ export default function Year({
     </table>
   );
 }
+
+Year.propTypes = {
+  selectedDate: PropTypes.string,
+  onChange: PropTypes.func,
+  showYearPicker: PropTypes.bool,
+};
+
+Year.defaultProps = {
+  selectedDate: moment().format("YYYY-MM-DD"),
+  onChange: () => {},
+  showYearPicker: false,
+};
+
+export default Year;

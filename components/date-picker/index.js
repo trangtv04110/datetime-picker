@@ -1,51 +1,38 @@
+import PropTypes from "prop-types";
 import { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import Year from "./year";
 import Date from "./date";
 
-function useOutsideAlerter(ref, setShowPicker) {
+function DatePicker({ selected, onChange }) {
+  const [showPicker, setShowPicker] = useState(false);
+  const [showYearPicker, setShowYearPicker] = useState(false);
+
+  const [confirmDate, setConfirmDate] = useState(selected);
+  const [selectedDate, setSelectedDate] = useState(selected);
+
+  const wrapperRef = useRef(null);
+
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setShowPicker(false);
       }
-    }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
-}
-
-export default function DatePicker() {
-  const [showPicker, setShowPicker] = useState(false);
-  const [showYearPicker, setShowYearPicker] = useState(false);
-
-  const [confirmDate, setConfirmDate] = useState(moment());
-
-  const [selectedDate, setSelectedDate] = useState(moment());
-  const [selectedMonth, setSelectedMonth] = useState(moment().month() + 1);
-  const [selectedYear, setSelectedYear] = useState(moment().year());
-
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setShowPicker);
+  }, [wrapperRef]);
 
   const increaseMonth = () => {
-    if (selectedMonth === 12) {
-      setSelectedMonth(1);
-      setSelectedYear(selectedYear + 1);
-    } else {
-      setSelectedMonth(selectedMonth + 1);
-    }
+    setSelectedDate(moment(selectedDate).add(1, "month").format("YYYY-MM-DD"));
   };
 
   const decreaseMonth = () => {
-    if (selectedMonth === 1) {
-      setSelectedMonth(12);
-      setSelectedYear(selectedYear - 1);
-    } else {
-      setSelectedMonth(selectedMonth - 1);
-    }
+    setSelectedDate(
+      moment(selectedDate).subtract(1, "month").format("YYYY-MM-DD")
+    );
   };
 
   return (
@@ -53,12 +40,11 @@ export default function DatePicker() {
       <div className="input-group">
         <label>Date picker</label>
         <input
-          defaultValue={confirmDate.format("MM/DD/YYYY")}
+          defaultValue={moment(confirmDate).format("MM/DD/YYYY")}
           onClick={() => {
             setSelectedDate(confirmDate);
-            setSelectedMonth(confirmDate.month() + 1);
-            setSelectedYear(confirmDate.year());
-            setShowPicker(!showPicker);
+            setShowYearPicker(false);
+            setShowPicker(true);
           }}
         />
       </div>
@@ -71,11 +57,7 @@ export default function DatePicker() {
                 style={{ paddingLeft: 10, cursor: "pointer" }}
                 onClick={() => setShowYearPicker(!showYearPicker)}
               >
-                {moment(
-                  `${selectedYear}-${selectedMonth}-01`,
-                  "YYYY-M-DD"
-                ).format("MMMM")}{" "}
-                {selectedYear}
+                {moment(selectedDate).format("MMMM YYYY")}
                 <button style={{ marginLeft: 10 }}>
                   <span
                     className="material-icons"
@@ -103,29 +85,23 @@ export default function DatePicker() {
               )}
             </div>
             {showYearPicker ? (
-              <div
-                className="modal-body"
-                style={{ height: 284, overflowY: "auto" }}
-              >
+              <div className="modal-body">
                 <Year
-                  selectedYear={selectedYear}
-                  handleSelectedYear={(i) => {
-                    setSelectedYear(i);
+                  selectedDate={selectedDate}
+                  onChange={(date) => {
                     setShowYearPicker(false);
-                    setSelectedDate(
-                      moment(`${i}-${selectedDate.format("MM-DD")}`)
-                    );
+                    setSelectedDate(date);
                   }}
                   showYearPicker={showYearPicker}
                 />
               </div>
             ) : (
-              <div className="modal-body" style={{ minHeight: 284 }}>
+              <div className="modal-body">
                 <Date
                   selectedDate={selectedDate}
-                  selectedMonth={selectedMonth}
-                  selectedYear={selectedYear}
-                  setSelectedDate={setSelectedDate}
+                  onChange={(date) => {
+                    setSelectedDate(date);
+                  }}
                 />
               </div>
             )}
@@ -136,6 +112,7 @@ export default function DatePicker() {
                 onClick={() => {
                   setConfirmDate(selectedDate);
                   setShowPicker(false);
+                  onChange(selectedDate);
                 }}
                 style={{ marginLeft: 8 }}
               >
@@ -148,3 +125,15 @@ export default function DatePicker() {
     </div>
   );
 }
+
+DatePicker.propTypes = {
+  selected: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+DatePicker.defaultProps = {
+  selected: moment().format("YYYY-MM-DD"),
+  onChange: () => {},
+};
+
+export default DatePicker;

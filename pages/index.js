@@ -3,6 +3,9 @@ import DatePicker from "../components/date-picker";
 import TimePicker from "../components/time-picker";
 
 export default function Home() {
+  const defaultDate = "2022-02-18";
+  const defaultTime = "04:19";
+
   return (
     <div>
       <Head>
@@ -16,8 +19,14 @@ export default function Home() {
       </Head>
 
       <main>
-        <DatePicker />
-        <TimePicker />
+        <DatePicker
+          selected={defaultDate}
+          onChange={(value) => console.log(value)}
+        />
+        <TimePicker
+          selected={defaultTime}
+          onChange={(value) => console.log(value)}
+        />
       </main>
     </div>
   );

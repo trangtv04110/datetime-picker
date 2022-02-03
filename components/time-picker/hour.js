@@ -1,4 +1,7 @@
-export default function HourPicker({ selectedHour, setSelectedHour }) {
+import PropTypes from "prop-types";
+import moment from "moment";
+
+function HourPicker({ selectedHour, onChange }) {
   const getSelectedClass = (i) => {
     if (Number(selectedHour) === i) return "circle flex-center selected";
     return "circle flex-center";
@@ -9,7 +12,7 @@ export default function HourPicker({ selectedHour, setSelectedHour }) {
     for (let i = 0; i < 12; i++) {
       arr.push(
         <div
-          onClick={() => setSelectedHour(i)}
+          onClick={() => onChange(i)}
           key={i}
           className={getSelectedClass(i)}
           style={{
@@ -31,7 +34,7 @@ export default function HourPicker({ selectedHour, setSelectedHour }) {
     for (let i = 12; i < 24; i++) {
       arr.push(
         <div
-          onClick={() => setSelectedHour(i)}
+          onClick={() => onChange(i)}
           key={i}
           className={getSelectedClass(i)}
           style={{
@@ -63,3 +66,15 @@ export default function HourPicker({ selectedHour, setSelectedHour }) {
     </div>
   );
 }
+
+HourPicker.propTypes = {
+  selectedHour: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+HourPicker.defaultProps = {
+  selectedHour: moment().format("HH"),
+  onChange: () => {},
+};
+
+export default HourPicker;

@@ -1,0 +1,247 @@
+.input-group {
+  position: relative;
+  margin-top: 24px;
+  width: 180px;
+  height: 50px;
+  border: 1px solid rgb(0 0 0 / 23%);
+  border-radius: 4px;
+}
+
+.input-group:focus {
+  border-color: rgb(144, 202, 249);
+}
+
+.input-group > label {
+  position: absolute;
+  top: -12px;
+  background-color: white;
+  padding: 4px;
+  margin-left: 10px;
+  font-size: 0.8rem;
+}
+
+.input-group > input {
+  border: 0px;
+  outline: 0px;
+  height: 1.4375em;
+  width: 100%;
+  padding: 16px 14px;
+  background-color: transparent;
+  margin-top: 12px;
+  font-size: 1rem;
+}
+.modal {
+  background: hsla(0, 0%, 40%, 0.85);
+  color: white;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.modal-header > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-header button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  outline: 0px;
+  border: 0px;
+  cursor: pointer;
+  border-radius: 50%;
+  color: white;
+  height: 34px;
+  width: 34px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.modal-header button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.modal-header button:active {
+  background-color: white;
+}
+
+.modal-content {
+  width: 340px;
+  padding: 15px;
+  border-radius: 5px;
+  background: #2e2e2e;
+  color: white;
+}
+
+.modal-body {
+  /* height: 284px; */
+  height: 300px;
+  overflow-y: auto;
+}
+
+.modal-body th {
+  color: rgba(255, 255, 255, 0.7);
+  width: 36px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.modal-body button {
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: 0px;
+  border: 0px;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgb(18, 18, 18);
+  color: white;
+  margin: 0px 2px;
+}
+
+.modal-body button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.modal-body button.selected {
+  color: rgba(0, 0, 0, 0.87);
+  background-color: rgb(66, 165, 245);
+  font-weight: 500;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.modal-body button.selected:focus {
+  background-color: rgb(66, 165, 245);
+}
+
+.modal-body button.selected:hover {
+  background-color: rgb(66, 165, 245);
+}
+
+.modal-footer {
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.modal-footer > button {
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  min-width: 64px;
+  text-transform: uppercase;
+  color: rgb(144, 202, 249);
+  background-color: transparent;
+  outline: 0px;
+  border: 0px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.modal-footer > button:hover {
+  cursor: pointer;
+  background-color: rgba(144, 202, 249, 0.08);
+}
+
+.year-table button {
+  background-color: transparent;
+  font-size: 1rem;
+  line-height: 1.75;
+  letter-spacing: 0.00938em;
+  margin: 8px 0px;
+  height: 36px;
+  width: 72px;
+  border-radius: 18px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Time Picker */
+.circle-wrapper {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  /* background: Chartreuse; */
+  background-color: rgba(0, 0, 0, 0.07);
+  position: relative;
+}
+
+.dot-center {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgb(66, 165, 245);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.line {
+  height: 88px;
+  width: 2px;
+  background-color: rgb(66, 165, 245);
+  position: absolute;
+  left: calc(50% - 1px);
+  bottom: 50%;
+  transform-origin: center bottom 0px;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.circle {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 135px;
+  left: 135px;
+  width: 30px;
+  height: 30px;
+  /* background: red; */
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.circle:hover,
+.circle.selected {
+  background-color: rgb(66 165 245 / 79%);
+  color: white !important;
+}

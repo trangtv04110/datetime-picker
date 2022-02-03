@@ -1,42 +1,22 @@
-import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import moment from "moment";
 
-export default function Date({
-  selectedDate,
-  selectedMonth,
-  selectedYear,
-  setSelectedDate,
-}) {
-  const [dayLength, setDayLength] = useState(
-    moment().endOf("month").diff(moment().startOf("month"), "days") + 1
-  );
-  const [weekdayStart, setWeekdayStart] = useState(
-    moment().startOf("month").weekday()
-  );
-
-  useEffect(() => {
-    const thisMonth = moment(
-      `${selectedYear}-${selectedMonth}-01`,
-      "YYYY-M-DD"
-    );
-    setDayLength(
-      moment(thisMonth)
-        .endOf("month")
-        .diff(thisMonth.startOf("month"), "days") + 1
-    );
-    setWeekdayStart(thisMonth.weekday());
-  }, [selectedMonth, selectedYear]);
+function Date({ selectedDate, onChange }) {
+  const dayLength =
+    moment(selectedDate)
+      .endOf("month")
+      .diff(moment(selectedDate).startOf("month"), "days") + 1;
+  const weekdayStart = moment(selectedDate).startOf("month").weekday();
 
   const chooseDate = (date) => {
-    setSelectedDate(
-      moment(`${selectedYear}-${selectedMonth}-${date}`, "YYYY-M-DD")
-    );
+    const newDate = moment(selectedDate).set("date", date);
+    onChange(newDate.format("YYYY-MM-DD"));
   };
 
   const getSelectedClass = (date) => {
     if (
-      selectedDate.format("YYYY-M") === `${selectedYear}-${selectedMonth}` &&
-      selectedDate.date() === date
+      // selectedDate.format("YYYY-M") === `${selectedYear}-${selectedMonth}` &&
+      moment(selectedDate).date() === date
     )
       return "selected";
     return "";
@@ -85,3 +65,15 @@ export default function Date({
     </table>
   );
 }
+
+Date.propTypes = {
+  selectedDate: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+Date.defaultProps = {
+  selectedDate: moment().format("YYYY-MM-DD"),
+  onChange: () => {},
+};
+
+export default Date;
