@@ -4,8 +4,9 @@ import MinutePicker from "./minute";
 import HourPicker from "./hour";
 
 const addPadding = (number) => {
-  if (number < 10) return `0${number}`;
-  return number;
+  const num = Number(number);
+  if (num < 10) return `0${num}`;
+  return num;
 };
 
 function useOutsideAlerter(ref, setShowPicker) {
